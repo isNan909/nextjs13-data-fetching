@@ -9,7 +9,7 @@ export default function Serverpage() {
 	const characters = use(getCharacters());
 	return (
 		<div>
-			<h2>Server Fetching</h2>
+			<h2>Server Fetching (getServerSideProps)</h2>
 			{characters?.results?.map((c) => {
 				return (
 					<ul key={c.id}>
