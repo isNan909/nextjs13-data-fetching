@@ -1,26 +1,23 @@
-"use client"
+import Link from 'next/link'
+import { use } from "react"
 
-import useSWR from "swr";
-import Link from "next/link"
-import { Suspense } from 'react'
-
-const fetcher = (path) => fetch(`https://rickandmortyapi.com/${path}`).then(res => res.json())
+// getStaticProps in Next13
+async function getCharacters() {
+	return await (await fetch("https://rickandmortyapi.com/api/character")).json()
+}
 
 export default function BlogList() {
-	const characters = useSWR("api/character", fetcher)
-
+	const allCharacters = use(getCharacters())
 	return (
 		<div>
 			<h2>getStaticPaths and getStaticProps</h2>
-			<Suspense fallback={<>Loading ...</>}>
-				{characters.data?.results.map(c =>
-					<ul key={c.id}>
-						<Link href={`/staticprops/${c.name}`.replace(/\s+/g, "-").toLowerCase()}>
-							<li>{c.name}</li>
-						</Link>
-					</ul>
-				)}
-			</Suspense>
+			{allCharacters?.results.map(c =>
+				<ul key={c.id}>
+					<Link href={`/staticprops/${c.name}`.replace(/\s+/g, "-").toLowerCase()}>
+						<li>{c.name}</li>
+					</Link>
+				</ul>
+			)}
 		</div>
 	)
 }
