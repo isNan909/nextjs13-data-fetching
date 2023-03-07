@@ -10,7 +10,7 @@ const routes = [
 export default function Navbar() {
 	return (
 		<>{routes.map(r =>
-			<Link className={ styles.navlinks } key={r.index} href={r.path}>{r.name}</Link>
+			<Link className={ styles.navlinks } key={r.path} href={r.path}>{r.name}</Link>
 			)}
 		</>
 	)
